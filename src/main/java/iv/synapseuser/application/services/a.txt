@@ -1,0 +1,45 @@
+/**
+ * Crear usuario completo (User + Preferences + Settings)
+ */
+public interface CreateCompleteUserUseCase {
+    UserCompleteResponse execute(CreateUserRequest request);
+}
+
+/**
+ * Obtener perfil completo (User + Preferences + Settings en un DTO)
+ */
+public interface GetUserProfileUseCase {
+    UserCompleteResponse execute(UUID userId);
+    UserCompleteResponse executeByAuthId(UUID authId);
+}
+
+/**
+ * Desactivar cuenta de usuario (soft delete + eventos)
+ */
+public interface DeactivateUserAccountUseCase {
+    void execute(UUID userId, String reason);
+    void executeByAuthId(UUID authId, String reason);
+}
+
+/**
+ * Reactivar cuenta de usuario previamente desactivada
+ */
+public interface ReactivateUserAccountUseCase {
+    UserCompleteResponse execute(UUID userId);
+}
+
+/**
+ * Eliminar permanentemente cuenta (hard delete + GDPR)
+ */
+public interface PermanentlyDeleteUserUseCase {
+    void execute(UUID userId, String confirmation);
+}
+
+// ============ BATCH OPERATIONS ============
+
+/**
+ * Limpiar usuarios eliminados hace más de X días
+ */
+public interface CleanupDeletedUsersUseCase {
+    int execute(int daysThreshold);
+}
